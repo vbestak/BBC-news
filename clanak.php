@@ -26,7 +26,7 @@ $result = mysqli_fetch_array($result);
       <img src="<?php echo $result["slika"] ?>" alt="slika"/>
 
       <h3> <?php echo $result["sazetak"] ?> </h3>
-      <p> <?php echo $result["text"] ?> </p>
+      <p> <?php echo $result["clanak"] ?> </p>
     </article>
 
     <?php include "footer.html" ?>

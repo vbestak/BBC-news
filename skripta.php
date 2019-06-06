@@ -25,7 +25,7 @@
   include "connect.php";
 
   if($dbc){
-    $stmt = $dbc->prepare("INSERT INTO vijesti(datum, naslov, sazetak, text, slika, kategorija, arhiva) VALUES (CURDATE(), ?, ?, ?, ?, ?, ?)");
+    $stmt = $dbc->prepare("INSERT INTO vijesti(datum, naslov, sazetak, clanak, slika, kategorija, arhiva) VALUES (CURDATE(), ?, ?, ?, ?, ?, ?)");
 
     $stmt->bind_param('sssssi',$nazivVijesti, $kratkiOpis, $sazetakVijesti, $target, $kategorijaVijesti, $arhivirajVijest);
     $stmt->execute();

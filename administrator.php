@@ -19,9 +19,9 @@
 
       $query = "SELECT * FROM vijesti"; $result = mysqli_query($dbc, $query);
        while($row = mysqli_fetch_array($result)) {
-          echo '<form enctype="multipart/form-data" action="" method="POST">
+          echo '<form class="admin-tab-form" enctype="multipart/form-data" action="" method="POST">
             <div class="form-item">
-              <label for="title">Naslov vjesti:</label>
+              <label for="title">Naslov</label>
                 <div class="form-field">
                   <input type="text" name="title" class="form-field-textual" value="'.$row['naslov'].'">
                 </div>
@@ -30,23 +30,22 @@
             <div class="form-item">
               <label for="about">Kratki sadržaj vijesti (do 50 znakova):</label>
                  <div class="form-field">
-                    <textarea name="about" id="" cols="30" rows="10" class="formfield-textual">'.$row['sazetak'].'</textarea>
+                    <textarea name="about" id="" cols="30" rows="5" class="formfield-textual">'.$row['sazetak'].'</textarea>
                   </div>
             </div>
 
             <div class="form-item">
               <label for="content">Sadržaj vijesti:</label>
               <div class="form-field">
-                <textarea name="content" id="" cols="30" rows="10" class="formfield-textual">'.$row['text'].'</textarea>
+                <textarea name="content" id="" cols="30" rows="14" class="formfield-textual">'.$row['clanak'].'</textarea>
               </div>
             </div>
 
             <div class="form-item">
               <label for="pphoto">Slika:</label>
+                <br><img src="'  . $row['slika'] . '">
                  <div class="form-field">
                    <input type="file" class="input-text" id="pphoto" value="'.$row['slika'].'" name="pphoto"/>
-                    <br><img src="'  . $row['slika'] . '" width=100px> // pokraj gumba za odabir slike pojavljuje se umanjeni prikaz postojeće slike
-
                   </div>
             </div>
 
@@ -78,9 +77,8 @@
                   <button type="reset" value="Poništi">Poništi</button>
                     <button type="submit" name="update" value="Prihvati"> Izmjeni</button>
                       <button type="submit" name="delete" value="Izbriši"> Izbriši</button>
-               </div>
+              </div>
           </form>';
-
       }
 
       if(isset($_POST['delete'])){
@@ -90,8 +88,9 @@
       }
 
       if(isset($_POST['update'])){
+        $id=$_POST['id'];
         $extension = pathinfo($_FILES['pphoto']['name'], PATHINFO_EXTENSION);
-        $picture = generateRandomString() . $extension;
+        $picture = generateRandomString() ."." . $extension;
         $title=$_POST['title'];
         $about=$_POST['about'];
         $content=$_POST['content'];
@@ -102,14 +101,16 @@
         }else{
          $archive=0;
         }
-        echo $_FILES['pphoto']['name'];
 
-        $target_dir = 'imgs/'. $picture;
+        if($extension){
+          $target_dir = 'imgs/'. $picture;
+          move_uploaded_file($_FILES["pphoto"]["tmp_name"], $target_dir);
 
-        move_uploaded_file($_FILES["pphoto"]["tmp_name"], $target_dir);
+          $query = " UPDATE vijesti SET slika='$target_dir' WHERE id=$id ";
+          mysqli_query($dbc, $query);
+        }
 
-        $id=$_POST['id'];
-        $query = "UPDATE vijesti SET naslov='$title', sazetak='$about', text='$content', slika='$target_dir', kategorija='$category', arhiva='$archive' WHERE id=$id ";
+        $query = "UPDATE vijesti SET naslov='$title', sazetak='$about', clanak='$content', kategorija='$category', arhiva='$archive' WHERE id=$id ";
         $result = mysqli_query($dbc, $query);
       }
       ?>
