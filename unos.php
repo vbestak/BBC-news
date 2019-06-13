@@ -11,9 +11,10 @@
       <form name="unosVijesti" action="skripta.php" method="post" enctype="multipart/form-data">
         <div class="form-item">
            <label for="title">Naslov vijesti</label>
-              <div class="form-field">
-                <input type="text" name="title" class="form-field-textual">
-              </div>
+           <div class="form-field">
+            <input type="text" name="title" class="form-field-textual">
+           </div>
+           <span id="titlePoruka"></span>
         </div>
 
         <div class="form-item">
@@ -21,6 +22,7 @@
             <div class="form-field">
               <textarea name="about" id="about" cols="30" rows="10" class="form-field-textual"></textarea>
             </div>
+            <span id="aboutPoruka"></span>
           </div>
 
           <div class="form-item">
@@ -28,6 +30,7 @@
             <div class="form-field">
               <textarea name="content" id="content" cols="30" rows="10" class="form-field-textual"></textarea>
             </div>
+            <span id="contentPoruka"></span>
           </div>
 
           <div class="form-item">
@@ -35,6 +38,7 @@
             <div class="form-field">
               <input type="file" accept="image/jpg,image/gif" name="pphoto"/>
             </div>
+            <span id="pphotoPoruka"></span>
           </div>
 
           <div class="form-item">
@@ -56,7 +60,7 @@
           </div>
 
           <div class="form-item">
-            <button type="submit" value="Prihvati">Prihvati</button>
+            <button type="submit" onclick="return checkForm()" value="Prihvati">Prihvati</button>
             <button type="reset" value="Poništi">Poništi</button>
           </div>
 
@@ -64,5 +68,7 @@
     </div>
 
     <?php include "footer.html" ?>
+
+    <script type="text/javascript" src="src/unos_forma_checker.js"></script>
   </body>
 </html>
