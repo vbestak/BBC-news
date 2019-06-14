@@ -194,3 +194,13 @@
     .formfield-textual{width: 80%; outline: 0;  border: 2px solid black; border-radius: 25px; padding: 10px; overflow-y: hidden;}
       .formfield-textual:focus{border: 2px solid #bef441;}
     .admin-tab-form{padding: 15px}
+
+    /* registracija.php */
+    [role="register"]{
+      padding-bottom: 4.5em;
+    }
+
+    [role="login"]{
+      padding-top: 4.5em;
+      padding-bottom: 8em;
+    }

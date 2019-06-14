@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,14 +10,29 @@
     <?php include "header.html" ?>
 
     <div class="container clearfix" id="main-container">
-      <?php include "connect.php";
+      <?php
 
-      function generateRandomString($length = 10) {
-        return substr(
-                str_shuffle(
-                  str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-                    , ceil($length/strlen($x)) )),1,$length);
+      include "connect.php";
+
+      if(isset($_POST["prijava"])){
+        echo"sad";
+        $stmt = $dbc->prepare("SELECT username, password,razina FROM users WHERE username = ?");
+        $stmt->bind_param("s", $_POST["username"]);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($username, $password, $razina );
+        $stmt->fetch();
+
+        if(password_verify($_POST["password"], $password) && $stmt->num_rows() > 0 ){
+            $_SESSION["username"] = $username;
+            $_SESSION["razina"] = $razina;
+        }else {
+          echo "<p> Jeste li se <a href='registracija.php'> registrirali </a> </p>";
+        }
       }
+
+      if(isset($_SESSION["razina"]) && $_SESSION["razina"] == 1){
+
 
       $query = "SELECT * FROM vijesti"; $result = mysqli_query($dbc, $query);
        while($row = mysqli_fetch_array($result)) {
@@ -81,6 +98,38 @@
           </form>';
       }
 
+    } else if(isset($_SESSION["razina"]) && $_SESSION["razina"] ==  0) {
+      echo "<img src='nedovoljnaRazina.png'>";
+    }else{
+      echo '
+      <section  role="login">
+        <form  enctype="multipart/form-data"  action=""  method="POST">
+
+          <div  class="form-item">
+            <span  id="porukaUsername"  class="bojaPoruke"></span>
+            <label  for="content">Korisničko  ime:</label>
+
+            <div  class="form-field">
+              <input  type="text"  name="username"  id="username"  class="form-field-textual" autocomplete="off">
+            </div>
+          </div>
+
+          <div  class="form-item">
+            <span  id="porukaPass"  class="bojaPoruke"></span>
+            <label  for="pphoto">Lozinka:  </label>
+            <div  class="form-field">
+              <input  type="password"  name="password"  id="password"  class="form-field-textual" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="form-item">
+           <button type="submit" name="prijava" value="prijava" id="slanje">Prijava</button>
+          </div>
+
+        </form>
+      </section> ';
+    }
+
       if(isset($_POST['delete'])){
         $id=$_POST['id'];
         $query = "DELETE FROM vijesti WHERE id=$id ";
@@ -88,6 +137,15 @@
       }
 
       if(isset($_POST['update'])){
+
+        function generateRandomString($length = 10) {
+          return substr(
+                  str_shuffle(
+                    str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                      , ceil($length/strlen($x)) )),1,$length);
+        }
+
+
         $id=$_POST['id'];
         $extension = pathinfo($_FILES['pphoto']['name'], PATHINFO_EXTENSION);
         $picture = generateRandomString() ."." . $extension;
@@ -113,6 +171,8 @@
         $query = "UPDATE vijesti SET naslov='$title', sazetak='$about', clanak='$content', kategorija='$category', arhiva='$archive' WHERE id=$id ";
         $result = mysqli_query($dbc, $query);
       }
+
+      mysqli_close($dbc);
       ?>
 
     </div>
