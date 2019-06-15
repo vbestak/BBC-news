@@ -13,12 +13,8 @@
   $kategorijaVijesti = $_POST['category'];
   $slikaVijesti = generateRandomString();
   $extension = pathinfo($_FILES['pphoto']['name'], PATHINFO_EXTENSION);
-  $arhivirajVijest = $_POST['archive'];
-
-  if($arhivirajVijest == on){
-    $arhivirajVijest = 1;
-  }else{$arhivirajVijest=0;}
-
+  $arhivirajVijest = 1;
+  
   $target = 'imgs/' . $slikaVijesti . "." . $extension;
   move_uploaded_file($_FILES['pphoto']['tmp_name'], $target);
 
@@ -61,3 +57,8 @@
      <?php include "footer.html" ?>
    </body>
  </html>
+
+
+<?   // if($arhivirajVijest == on){
+   //   $arhivirajVijest = 1;
+   // }else{$arhivirajVijest=0;}?>

@@ -1,6 +1,6 @@
 <?php include "connect.php";
 
-$query = "SELECT * FROM vijesti WHERE id= $_GET[id]";
+$query = "SELECT * FROM vijesti WHERE id= $_GET[id] AND arhiva = 0";
 $result = mysqli_query($dbc, $query);
 $result = mysqli_fetch_array($result);
 

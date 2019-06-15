@@ -204,3 +204,50 @@
       padding-top: 4.5em;
       padding-bottom: 8em;
     }
+
+    #uspijesnaRegistracija{
+      text-align: center;
+      padding-bottom: 25px;
+    }
+
+    #registracijaHref{
+      padding-top: 25px;
+      text-align: center;
+    }
+
+    #nedovoljnaRazina img{
+      width: 40%;
+      padding: 50px 30%;
+    }
+
+
+    @media (max-width: 645px){
+      header .container{padding: 0 0;}
+      header a{ width: 100%; padding: 12px 5px; box-sizing: border-box;}
+      header a img{width: 30%; padding: 0 35%;}
+
+      nav{width: 100%; box-sizing: border-box;}
+
+       ul li{
+          width: 100%;
+          text-align: center;
+          border: 0px solid black;
+          box-sizing: border-box;
+        }
+
+          ul li a{
+            width: 100%;
+            box-sizing: border-box;
+          }
+
+      .singleArticle{
+        width: 80%;
+        padding: 40px 10%;
+      }
+
+      .singleArticle:nth-of-type(3n){
+       padding-right: 10%%;
+       clear: none;
+      }
+
+    }

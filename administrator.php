@@ -15,7 +15,6 @@
       include "connect.php";
 
       if(isset($_POST["prijava"])){
-        echo"sad";
         $stmt = $dbc->prepare("SELECT username, password,razina FROM users WHERE username = ?");
         $stmt->bind_param("s", $_POST["username"]);
         $stmt->execute();
@@ -26,8 +25,6 @@
         if(password_verify($_POST["password"], $password) && $stmt->num_rows() > 0 ){
             $_SESSION["username"] = $username;
             $_SESSION["razina"] = $razina;
-        }else {
-          echo "<p> Jeste li se <a href='registracija.php'> registrirali </a> </p>";
         }
       }
 
@@ -99,7 +96,7 @@
       }
 
     } else if(isset($_SESSION["razina"]) && $_SESSION["razina"] ==  0) {
-      echo "<img src='nedovoljnaRazina.png'>";
+      echo "<div id='nedovoljnaRazina'><img src='imgs/nedovoljnaRazina.png'></div>";
     }else{
       echo '
       <section  role="login">
@@ -127,9 +124,10 @@
           </div>
 
         </form>
+        <div id="registracijaHref"> <p> Jeste li se <a href="registracija.php"> registrirali? </a> </p></div>
       </section> ';
     }
-
+    include "connect.php";
       if(isset($_POST['delete'])){
         $id=$_POST['id'];
         $query = "DELETE FROM vijesti WHERE id=$id ";
@@ -153,6 +151,7 @@
         $about=$_POST['about'];
         $content=$_POST['content'];
         $category=$_POST['category'];
+        $archive = 0;
 
         if(isset($_POST['archive'])){
          $archive=1;
@@ -164,12 +163,16 @@
           $target_dir = 'imgs/'. $picture;
           move_uploaded_file($_FILES["pphoto"]["tmp_name"], $target_dir);
 
-          $query = " UPDATE vijesti SET slika='$target_dir' WHERE id=$id ";
-          mysqli_query($dbc, $query);
+          $stmt = $dbc->prepare("UPDATE vijesti SET slika=? WHERE id=? ");
+          $stmt->bind_param("si" ,$target_dir, $id );
+          $stmt->execute();
+          $stmt->close;
         }
 
-        $query = "UPDATE vijesti SET naslov='$title', sazetak='$about', clanak='$content', kategorija='$category', arhiva='$archive' WHERE id=$id ";
-        $result = mysqli_query($dbc, $query);
+        $stm = $dbc->prepare("UPDATE vijesti SET naslov=?, sazetak=?, clanak=?, kategorija=?, arhiva=$archive WHERE id=$id ");
+        $stm->bind_param("ssss", $title, $about, $content, $category );
+        $stm->execute();
+        $stm->close();
       }
 
       mysqli_close($dbc);

@@ -60,13 +60,17 @@
             </div>
 
             <div class="form-item">
-             <button type="submit" value="Prijava" id="slanje">Registracija</button>
+             <button type="submit" value="Prijava" name="slanje" id="slanje">Registracija</button>
             </div>
 
           </form>
         </section>
 
-        <?php include "src/registracija.php" ?>
+        <?php
+        if(isset($_POST["slanje"])){
+         include "src/registracija.php";
+        }
+        ?>
 
     </div>
 

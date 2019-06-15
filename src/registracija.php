@@ -11,11 +11,10 @@ if($stmt->execute()){
   $_SESSION["username"] = $_POST["username"];
   $_SESSION["razina"] = 0;
 
-  echo "<p>Uspijesna registracija!</p>";
+  echo "<div id='uspijesnaRegistracija'><p>Uspiješna registracija!</p></div>";
 }
 
 $stmt->close();
 mysqli_close($dbc);
-
 
  ?>

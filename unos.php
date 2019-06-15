@@ -54,7 +54,7 @@
           <div class="form-item">
             <label>Spremiti u arhivu:
               <div class="form-field">
-                <input type="checkbox" name="archive"/>
+                <input type="checkbox" value="true" name="archive"/>
               </div>
             </label>
           </div>
