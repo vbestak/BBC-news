@@ -68,7 +68,7 @@
                   <div class="form-field">
                     <select name="category" id="" class="form-field-textual" value="'.$row['kategorija'].'">
                       <option value="sport">Sport</option>
-                      <option value="kultura">Kultura</option>
+                      <option value="news">News</option>
                     </select>
                   </div>
             </div>

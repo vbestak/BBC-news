@@ -23,9 +23,6 @@ let jedinstvenoIme = true;
     xhttp.send("userName=" + username);
   });
 
-
-
-
 //provjera polja kod pritiska gumba
   document.getElementById("slanje").onclick = function(event) {
     var slanjeForme = true;

@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-item">
-          <label for="about">Kratki sadržaj vijesti (do 50 znakova)</label>
+          <label for="about">Kratki sadržaj vijesti</label>
             <div class="form-field">
               <textarea name="about" id="about" cols="30" rows="10" class="form-field-textual"></textarea>
             </div>

@@ -1,5 +1,4 @@
 function checkForm(){
-  debugger;
   let sendForm = true;
   let ime = document.getElementsByName("title")[1];
   let kratkiSadrzaj = document.getElementsByName("about")[0];
@@ -7,7 +6,7 @@ function checkForm(){
   let slika = document.getElementsByName("pphoto")[0];
   let kategorija = document.getElementsByName("category")[0];
 
-  if(ime.value < 5 || ime.value > 30){
+  if(ime.value.length < 5 || ime.value.length > 30){
     sendForm = false;
     ime.style.border = "2px solid red";
     document.getElementById("titlePoruka").innerHTML = "Naslov vjesti mora imati između 5 i 30 znakova!<br>";
@@ -16,7 +15,7 @@ function checkForm(){
     let x = document.getElementById("titlePoruka").innerHTML = "";
   }
 
-  if(kratkiSadrzaj.value < 10 || kratkiSadrzaj.value > 100){
+  if(kratkiSadrzaj.value.length < 10 || kratkiSadrzaj.value.length > 100){
     sendForm = false;
     kratkiSadrzaj.style.border = "2px solid red";
     document.getElementById("aboutPoruka").innerHTML = "Kratki sadržaj mora imati između 10 i 100 znakova!<br>";
